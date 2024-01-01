@@ -6,7 +6,7 @@ const server = express();
 
 /* mongoose */
 const main = async () => {
-  await mongoose.connect("mongodb://127.0.0.1:27017/ecommerce");
+  await mongoose.connect("mongodb+srv://vivek:HmHJd7sD2Sls4Uhy@cluster0.15izop1.mongodb.net/?retryWrites=true&w=majority");
 };
 
 main().catch((err) => {
