@@ -6,7 +6,7 @@ const server = express();
 
 /* mongoose */
 const main = async () => {
-  await mongoose.connect("mongodb+srv://vivek:HmHJd7sD2Sls4Uhy@cluster0.15izop1.mongodb.net/?retryWrites=true&w=majority");
+  await mongoose.connect("mongodb+srv://vivek:HmHJd7sD2Sls4Uhy@cluster0.15izop1.mongodb.net/test");
 };
 
 main().catch((err) => {
@@ -25,6 +25,6 @@ server.use("/", (req, res) => {
   res.send("Home Page");
 });
 
-server.listen("https://web-app-backend-hjik.onrender.com/", () => {
+server.listen(3000, () => {
   console.log(`server started`);
 });
