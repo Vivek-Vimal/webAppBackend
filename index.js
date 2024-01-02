@@ -4,11 +4,12 @@ const { brandRouter, productRouter, authRouter } = require("./router");
 
 const server = express();
 
+const PORT = process.env.BASE_URL || 8000;
+const DB = process.env.DB
+
 /* mongoose */
 const main = async () => {
-  await mongoose.connect(
-    "mongodb+srv://vivek:HmHJd7sD2Sls4Uhy@cluster0.15izop1.mongodb.net/?retryWrites=true&w=majority"
-  );
+  await mongoose.connect(DB);
 };
 
 main().catch((err) => {
@@ -27,6 +28,6 @@ server.use("/", (req, res) => {
   res.send("Home Page");
 });
 
-server.listen("https://web-app-backend-hjik.onrender.com/", () => {
+server.listen(PORT, () => {
   console.log(`server started`);
 });
