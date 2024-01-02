@@ -1,15 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const { brandRouter, productRouter, authRouter } = require("./router");
+require('dotenv').config();
 
 const server = express();
 
-const PORT = process.env.BASE_URL || 8000;
+const PORT = 6000 || 8000;
 const DB = process.env.DB
+
+console.log(`DB`,DB)
 
 /* mongoose */
 const main = async () => {
-  await mongoose.connect(DB);
+  await mongoose.connect("mongodb+srv://vivek:HmHJd7sD2Sls4Uhy@cluster0.15izop1.mongodb.net/?retryWrites=true&w=majority");
 };
 
 main().catch((err) => {
@@ -28,6 +31,6 @@ server.use("/", (req, res) => {
   res.send("Home Page");
 });
 
-server.listen(PORT, () => {
+server.listen(PORT,'0.0.0.0', () => {
   console.log(`server started`);
 });
