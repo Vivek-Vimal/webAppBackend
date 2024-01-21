@@ -8,7 +8,7 @@ const signUp = async (req, res) => {
   try {
     const isUserPresent = await auth.findOne({ email });
     if (isUserPresent) {
-      return res.status(400).json("user already exists");
+      return res.status(400).json({ message: "user already exists" });
     }
     const getRounds = 10;
     const hashedPass = await brcypt.hash(password, getRounds);
@@ -25,10 +25,14 @@ const signUp = async (req, res) => {
     );
 
     if (isUserSaved) {
-      return res.status(200).json({ user: isUserSaved, token: token });
+      return res.status(200).json({
+        user: isUserSaved,
+        token: token,
+        message: "Sign Up successfully",
+      });
     }
   } catch (err) {
-    res.status(400).json("Internal sever error");
+    res.status(400).json({ message: "Internal sever error" });
   }
 };
 
@@ -37,21 +41,23 @@ const signIn = async (req, res) => {
   try {
     const isUserPresent = await auth.findOne({ email });
     if (!isUserPresent) {
-      return res.status(400).json("User not exists");
+      return res.status(400).json({ message: "User not exists" });
     }
 
     const passMatch = await brcypt.compare(password, isUserPresent?.password);
 
     if (!passMatch) {
-      return res.status(400).json("Invalid credentials");
+      return res.status(400).json({ message: "Invalid credentials" });
     }
     const token = jwt.sign(
       { email: isUserPresent?.email, id: isUserPresent?._id },
       SECRET_KEY
     );
-    res.status(200).json({ user: isUserPresent, token });
+    res
+      .status(200)
+      .json({ user: isUserPresent, token, message: "Sign In successfully" });
   } catch (err) {
-    res.status(400).json("Internal Server error");
+    res.status(400).json({ message: "Internal sever error" });
   }
 };
 
