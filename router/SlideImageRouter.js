@@ -7,4 +7,4 @@ slideRouter.get("/", fetchSlideImg);
 
 slideRouter.post("/", saveSlideImg);
 
-module.exports.slideRouter;
+module.exports = slideRouter;
