@@ -1,7 +1,7 @@
 const express = require("express");
 const { fetchSlideImg, saveSlideImg } = require("../controller/SlideImg");
 
-const slideRouter = express.router();
+const slideRouter = express.Router();
 
 slideRouter.get("/", fetchSlideImg);
 
