@@ -13,7 +13,7 @@ module.exports.saveSlideImg = async (req, res) => {
   const saveSlide = new slideModel(req.body);
   try {
     const response = await saveSlide.save();
-    res.status(201).json(response);
+    res.status(201).json({ response, message: "Image added successfully" });
   } catch (err) {
     res.status(400).json(err);
   }
