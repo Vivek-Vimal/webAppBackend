@@ -1,7 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const { brandRouter, productRouter, authRouter } = require("./router");
+const {
+  brandRouter,
+  productRouter,
+  authRouter,
+  slideImgRouter,
+} = require("./router");
 require("dotenv").config();
 
 const server = express();
@@ -35,6 +40,7 @@ server.use(
 server.use("/product", productRouter);
 server.use("/brand", brandRouter);
 server.use("/auth", authRouter);
+server.use("/slideImg", slideImgRouter);
 
 server.use("/", (req, res) => {
   res.send("Home Page");
