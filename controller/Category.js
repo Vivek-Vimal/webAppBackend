@@ -11,7 +11,7 @@ module.exports.fetchCategory = async (req, res) => {
 
 module.exports.saveCategory = async (req, res) => {
   const { category } = req.body;
-  const categorySave = new categoryModel({ category });
+  const categorySave = new categoryModel(category);
   try {
     const response = await categorySave.save();
     res.status(201).json(response);
