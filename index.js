@@ -6,6 +6,7 @@ const {
   productRouter,
   authRouter,
   slideImgRouter,
+  categoryRouter,
 } = require("./router");
 require("dotenv").config();
 
@@ -41,6 +42,7 @@ server.use("/product", productRouter);
 server.use("/brand", brandRouter);
 server.use("/auth", authRouter);
 server.use("/slideImg", slideImgRouter);
+server.use("/category", categoryRouter);
 
 server.use("/", (req, res) => {
   res.send("Home Page");
