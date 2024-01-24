@@ -12,6 +12,7 @@ const productSchema = new Schema({
   },
   rating: { type: Number, default: 3 },
   category: { type: String, required: true },
+  url: { type: String, required: true },
 });
 
 exports.ProductModel = mongoose.model("product", productSchema);
