@@ -6,4 +6,5 @@ const slideImageSchema = new Schema({
   url: { required: true, type: String },
 });
 
-module.exports.slideModel = moongose.model("slideImg", slideImageSchema);
+module.exports =
+  moongose.models.slideImg || moongose.model("slideImg", slideImageSchema);

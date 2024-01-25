@@ -1,16 +1,22 @@
-const { brand } = require("./Brand");
-const { ProductModel } = require("./Product");
 const { auth } = require("./UserAuth");
-const { slideModel } = require("./SlideImage");
-//const { categoryModel, categoryDeleteModel } = require("./CategorySave");
-const categoryModel = require("./category/CategorySave");
+// here we import as any name (whatever we want): we haven't export by name
+const categorySaveModel = require("./category/CategorySave");
 const categoryDeleteModel = require("./category/CategoryDelete");
+const productSaveModel = require("./product/ProductSave");
+const productDeleteModel = require("./product/ProductDelete");
+const brandSaveModel = require("./brand/BrandSave");
+const brandDeleteModel = require("./brand/BrandDelete");
+const slideImageSave = require("./slideImage/SlideImageSave");
+const slideImageDelete = require("./slideImage/SlideImageDelete");
 
 module.exports = {
-  brand,
-  ProductModel,
   auth,
-  slideModel,
-  categoryModel,
+  categorySaveModel,
   categoryDeleteModel,
+  productSaveModel,
+  productDeleteModel,
+  brandSaveModel,
+  brandDeleteModel,
+  slideImageSave,
+  slideImageDelete,
 };
