@@ -6,4 +6,5 @@ const categorySchema = new Schema({
   title: { required: true, type: String },
 });
 
-module.exports.categoryModel = moongose.model("category", categorySchema);
+module.exports =
+  moongose.models.category || moongose.model("category", categorySchema);

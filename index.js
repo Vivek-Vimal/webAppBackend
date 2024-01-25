@@ -8,14 +8,8 @@ const {
   slideImgRouter,
   categoryRouter,
 } = require("./router");
-require("dotenv").config();
 
 const server = express();
-
-const PORT = 6000 || 8000;
-const DB = process.env.DB;
-
-console.log(`DB`, DB);
 
 /* mongoose */
 const main = async () => {
@@ -48,6 +42,6 @@ server.use("/", (req, res) => {
   res.send("Home Page");
 });
 
-server.listen(PORT, "0.0.0.0", () => {
+server.listen(8000, "0.0.0.0", () => {
   console.log(`server started`);
 });
