@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-//const { corsMiddleWare } = require("./middleware/Cors");
-const cors = require("cors");
+const { corsMiddleWare } = require("./middleware/Cors");
 const { authMiddleware } = require("./middleware/Auth");
 require("dotenv").config();
 const {
@@ -25,12 +24,7 @@ const PORT = process.env.PORT || 8000;
 
 //middlewares
 server.use(express.json());
-server.use(
-  cors({
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST", "DELETE"],
-  })
-);
+server.use(corsMiddleWare());
 
 server.use("/product", authMiddleware, productRouter);
 server.use("/brand", authMiddleware, brandRouter);
