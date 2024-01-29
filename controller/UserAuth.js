@@ -14,7 +14,6 @@ const signUp = async (req, res) => {
     const getRounds = 10;
     const hashedPass = await brcypt.hash(password, getRounds);
 
-    //model verification (missing keys) here so we have to do above
     const isUserSaved = await auth.create({
       userName: userName,
       email: email,
@@ -56,7 +55,7 @@ const signIn = async (req, res) => {
       SECRET_KEY
     );
     res.status(200).json({
-      //user: isUserPresent,
+      user: isUserPresent,
       token,
       message: "Sign In successfully",
     });
