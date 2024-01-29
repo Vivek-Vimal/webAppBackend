@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
+const { corsMiddleWare } = require("./middleware/Cors");
+const { authMiddleware } = require("./middleware/Auth");
+require("dotenv").config();
 const {
   brandRouter,
   productRouter,
@@ -13,35 +15,26 @@ const server = express();
 
 /* mongoose */
 const main = async () => {
-  await mongoose.connect(
-    "mongodb+srv://vivek:HmHJd7sD2Sls4Uhy@cluster0.15izop1.mongodb.net/?retryWrites=true&w=majority"
-  );
+  await mongoose.connect(process.env.DB);
 };
-
-main().catch((err) => {
-  console.log(`err`, err);
-});
+main().catch((err) => {});
 /* mongoose */
 
-//middleware for req.body
+const PORT = process.env.PORT || 8000;
+
+//middlewares
 server.use(express.json());
-server.use(
-  cors({
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST", "DELETE"],
-  })
-);
+server.use(corsMiddleWare());
 
-server.use("/product", productRouter);
-server.use("/brand", brandRouter);
+server.use("/product", authMiddleware, productRouter);
+server.use("/brand", authMiddleware, brandRouter);
 server.use("/auth", authRouter);
-server.use("/slideImg", slideImgRouter);
-server.use("/category", categoryRouter);
-
+server.use("/slideImg", authMiddleware, slideImgRouter);
+server.use("/category", authMiddleware, categoryRouter);
 server.use("/", (req, res) => {
   res.send("Home Page");
 });
 
-server.listen(8000, "0.0.0.0", () => {
+server.listen(PORT, "0.0.0.0", () => {
   console.log(`server started`);
 });

@@ -1,7 +1,8 @@
 const { auth } = require("../model");
 const brcypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const SECRET_KEY = "1001";
+require("dotenv").config();
+const SECRET_KEY = process.env.SECRET_KEY;
 
 const signUp = async (req, res) => {
   const { userName, email, password } = req.body;
@@ -13,6 +14,7 @@ const signUp = async (req, res) => {
     const getRounds = 10;
     const hashedPass = await brcypt.hash(password, getRounds);
 
+    //model verification (missing keys) here so we have to do above
     const isUserSaved = await auth.create({
       userName: userName,
       email: email,
@@ -53,9 +55,11 @@ const signIn = async (req, res) => {
       { email: isUserPresent?.email, id: isUserPresent?._id },
       SECRET_KEY
     );
-    res
-      .status(200)
-      .json({ user: isUserPresent, token, message: "Sign In successfully" });
+    res.status(200).json({
+      //user: isUserPresent,
+      token,
+      message: "Sign In successfully",
+    });
   } catch (err) {
     res.status(400).json({ message: "Internal sever error" });
   }
