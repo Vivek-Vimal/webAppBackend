@@ -12,15 +12,17 @@ const authMiddleware = (req, res, next) => {
       jwt.verify(extractToken, SECRET_KEY, (err, decoded) => {
         if (err) {
           //console.log("err", err);
+          res.status(401).json({ message: "Unauthorize User" });
         } else {
           //console.log("decode", decoded);
           req.userId = decoded.id;
+          next();
         }
       });
     } else {
       res.status(401).json({ message: "Unauthorize User" });
+      next();
     }
-    next();
   } catch (err) {
     res.status(401).json({ message: "error in authorization User" });
   }
