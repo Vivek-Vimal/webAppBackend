@@ -1,23 +1,26 @@
-const { auth } = require("../model");
-const brcypt = require("bcrypt");
+const { Auth } = require("../model");
+const brcypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const SECRET_KEY = process.env.SECRET_KEY;
 
-const signUp = async (req, res) => {
-  const { userName, email, password } = req.body;
+const register = async (req, res) => {
+  const { userName, email, password, role } = req.body;
   try {
-    const isUserPresent = await auth.findOne({ email });
+    
+    const isUserPresent = await Auth.findOne({ email });
     if (isUserPresent) {
       return res.status(400).json({ message: "user already exists" });
     }
+
     const getRounds = 10;
     const hashedPass = await brcypt.hash(password, getRounds);
 
-    const isUserSaved = await auth.create({
+    const isUserSaved = await Auth.create({
       userName: userName,
       email: email,
       password: hashedPass,
+      role: role
     });
 
     const token = jwt.sign(
@@ -29,7 +32,7 @@ const signUp = async (req, res) => {
       return res.status(200).json({
         user: isUserSaved,
         token: token,
-        message: "Sign Up successfully",
+        message: "registered successfully",
       });
     }
   } catch (err) {
@@ -37,10 +40,10 @@ const signUp = async (req, res) => {
   }
 };
 
-const signIn = async (req, res) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const isUserPresent = await auth.findOne({ email });
+    const isUserPresent = await Auth.findOne({ email });
     if (!isUserPresent) {
       return res.status(400).json({ message: "User not exists" });
     }
@@ -57,11 +60,11 @@ const signIn = async (req, res) => {
     res.status(200).json({
       user: isUserPresent,
       token,
-      message: "Sign In successfully",
+      message: "Logged in successfully",
     });
   } catch (err) {
     res.status(400).json({ message: "Internal sever error" });
   }
 };
 
-module.exports = { signUp, signIn };
+module.exports = { register, login };

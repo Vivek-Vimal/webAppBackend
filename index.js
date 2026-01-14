@@ -1,15 +1,13 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const { corsMiddleWare } = require("./middleware/Cors");
 var cors = require('cors');
+
 const { authMiddleware } = require("./middleware/Auth");
-require("dotenv").config();
 const {
-  brandRouter,
-  productRouter,
   authRouter,
-  slideImgRouter,
-  categoryRouter,
+  metadataRouter,
+  workflowRouter
 } = require("./router");
 
 const server = express();
@@ -27,20 +25,19 @@ const PORT = process.env.PORT || 8000;
 server.use(express.json());
 server.use(cors());
 
-server.use(function(req, res, next) {
+server.use(function(_, res, next) {
    res.header("Access-Control-Allow-Origin", "*");
-   res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
+   res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST, PATCH');
    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
    next();
 });
 
-server.use("/product", authMiddleware, productRouter);
-server.use("/brand", authMiddleware, brandRouter);
 server.use("/auth", authRouter);
-server.use("/slideImg", authMiddleware, slideImgRouter);
-server.use("/category", authMiddleware, categoryRouter);
-server.use("/", (req, res) => {
-  res.send("Home Page");
+server.use("/metadata", authMiddleware,   metadataRouter);
+server.use("/workflow", authMiddleware, workflowRouter);
+
+server.use("/", (_, res) => {
+  res.send("Server is successfully running");
 });
 
 server.listen(PORT, "0.0.0.0", () => {
