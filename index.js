@@ -7,7 +7,6 @@ const { authMiddleware } = require("./middleware/Auth");
 const {
   authRouter,
   metadataRouter,
-  workflowRouter
 } = require("./router");
 
 const server = express();
@@ -34,7 +33,6 @@ server.use(function(_, res, next) {
 
 server.use("/auth", authRouter);
 server.use("/metadata", authMiddleware,   metadataRouter);
-server.use("/workflow", authMiddleware, workflowRouter);
 
 server.use("/", (_, res) => {
   res.send("Server is successfully running");
