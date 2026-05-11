@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
 const metadataSchema = new mongoose.Schema({
-  varName: { type: String, required: true },
+  name: { type: String, required: true },
+  access: [{type:String}],
+  status: {type: String, required: true},
+  statusHistory: [{type:String}],
   data: [
     {
       title: { type: String, required: true },
