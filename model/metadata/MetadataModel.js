@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const metadataSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  access: [{type:String}],
+  access: [ { _id: {type:String} } ],
   status: {type: String, required: true},
   statusHistory: [{type:String}],
   data: [
